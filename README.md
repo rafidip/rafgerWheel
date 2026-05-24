@@ -11,6 +11,20 @@ Welcome to **rafgerWheel**! This is an interactive wheel/spinner project built w
   - HTML: 98.3%
   - JavaScript: 1.7%
 
+## Live Demo - GitHub Pages
+
+🚀 **Experience rafgerWheel live:** https://rafidip.github.io/rafgerWheel/
+
+This project is deployed and hosted on **GitHub Pages**, making it instantly accessible from anywhere in the world without needing to clone or install anything locally.
+
+### GitHub Pages Information
+
+- **Status:** ✅ Enabled
+- **Live URL:** https://rafidip.github.io/rafgerWheel/
+- **Deployment:** Automatic from the `main` branch
+- **Access:** The project is publicly available 24/7
+- **How it works:** GitHub Pages serves the HTML, CSS, and JavaScript files directly from this repository
+
 ## Getting Started
 
 ### Prerequisites
@@ -29,6 +43,7 @@ cd rafgerWheel
 
 # Open in your browser
 # Simply open the index.html file in your web browser
+# OR visit: https://rafidip.github.io/rafgerWheel/
 ```
 
 ### Usage
@@ -36,6 +51,8 @@ cd rafgerWheel
 ```bash
 # No build process required - just open index.html in your browser
 # The wheel will be ready to use immediately
+# 
+# For live version, visit: https://rafidip.github.io/rafgerWheel/
 ```
 
 ## Features
@@ -45,6 +62,7 @@ cd rafgerWheel
 - JavaScript-powered interactivity
 - Web-based accessibility
 - Easy to customize and extend
+- Hosted on GitHub Pages for free
 
 ## Project Structure
 
@@ -61,6 +79,7 @@ rafgerWheel/
 
 This project is fully accessible via GitHub's web interface at:
 - **Repository:** https://github.com/rafidip/rafgerWheel
+- **Live Site:** https://rafidip.github.io/rafgerWheel/ (via GitHub Pages)
 - **View Files:** Browse all project files directly on GitHub
 - **Clone:** Use `git clone https://github.com/rafidip/rafgerWheel.git`
 - **Issues:** Report bugs or request features via GitHub Issues
@@ -84,3 +103,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 If you have any questions or issues, please feel free to:
 - Open an issue on [GitHub Issues](https://github.com/rafidip/rafgerWheel/issues)
 - Check existing discussions on [GitHub Discussions](https://github.com/rafidip/rafgerWheel/discussions)
+- Visit the live site: https://rafidip.github.io/rafgerWheel/
