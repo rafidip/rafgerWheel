@@ -1,10 +1,10 @@
-# rafgerWheel
+# Raafgerwheel
 
-Welcome to **rafgerWheel**! This is an interactive wheel/spinner project built with modern web technologies.
+Welcome to **Raafgerwheel**! This is an interactive wheel/spinner project built with modern web technologies.
 
 ## Project Overview
 
-- **Repository Name:** rafgerWheel
+- **Repository Name:** Raafgerwheel
 - **Repository ID:** 1248031714
 - **GitHub URL:** https://github.com/rafidip/rafgerWheel
 - **Language Composition:**
@@ -13,7 +13,7 @@ Welcome to **rafgerWheel**! This is an interactive wheel/spinner project built w
 
 ## Live Demo - GitHub Pages
 
-🚀 **Experience rafgerWheel live:** https://rafidip.github.io/rafgerWheel/
+🚀 **Experience Raafgerwheel live:** https://rafidip.github.io/rafgerWheel/
 
 This project is deployed and hosted on **GitHub Pages**, making it instantly accessible from anywhere in the world without needing to clone or install anything locally.
 
@@ -67,7 +67,7 @@ cd rafgerWheel
 ## Project Structure
 
 ```
-rafgerWheel/
+Raafgerwheel/
 ├── index.html          # Main HTML file
 ├── style.css           # Styling (if separate)
 ├── script.js           # JavaScript functionality
