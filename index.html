@@ -6,9 +6,9 @@
 <meta name="theme-color" content="#ff6bff"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="SpinWheel"/>
-<meta name="description" content="The ultimate spin wheel decision maker — fully offline PWA"/>
-<title>SpinWheel Pro</title>
+<meta name="apple-mobile-web-app-title" content="rafgerWheel"/>
+<meta name="description" content="rafgerWheel - The ultimate interactive spin wheel decision maker with advanced features"/>
+<title>rafgerWheel - Spin Wheel Pro</title>
 <link rel="manifest" href="manifest.json"/>
 <link rel="icon" href="logo.svg" type="image/svg+xml"/>
 <link rel="apple-touch-icon" href="logo.svg"/>
@@ -841,10 +841,10 @@ select {
 
 <header>
   <div class="logo-group">
-    <img src="logo.svg" alt="SpinWheel Logo" onerror="this.style.display='none'"/>
+    <img src="logo.svg" alt="rafgerWheel Logo" onerror="this.style.display='none'"/>
     <div>
-      <h1>SpinWheel</h1>
-      <span>PRO</span>
+      <h1>rafgerWheel</h1>
+      <span>SPIN</span>
     </div>
   </div>
   <div class="header-actions">
@@ -999,1049 +999,730 @@ select {
           <option value="fire">Fire Storm</option>
           <option value="forest">Enchanted Forest</option>
           <option value="sunset">Sunset Vibes</option>
-          <option value="mono">Monochrome</option>
+          <option value="space">Space Galaxy</option>
         </select>
       </div>
       <div class="setting-row">
         <div>
-          <div class="setting-label">Show Entry Labels</div>
-          <div class="setting-sub">Text on wheel segments</div>
+          <div class="setting-label">Sound Effects</div>
+          <div class="setting-sub">Enable wheel sounds</div>
         </div>
-        <label class="toggle"><input type="checkbox" id="showLabels" checked onchange="drawWheel()"/><span class="toggle-slider"></span></label>
+        <label class="toggle">
+          <input type="checkbox" id="soundToggle" checked onchange="toggleSound()"/>
+          <span class="toggle-slider"></span>
+        </label>
       </div>
       <div class="setting-row">
         <div>
-          <div class="setting-label">Show Weights</div>
-          <div class="setting-sub">Display weight badges</div>
+          <div class="setting-label">Confetti on Win</div>
+          <div class="setting-sub">Celebration effects</div>
         </div>
-        <label class="toggle"><input type="checkbox" id="showWeights" checked onchange="renderEntries()"/><span class="toggle-slider"></span></label>
-      </div>
-      <div class="setting-row">
-        <div>
-          <div class="setting-label">Font Size</div>
-          <div class="setting-sub">Wheel label size</div>
-        </div>
-        <select id="fontSizeSelect" onchange="drawWheel()">
-          <option value="12">Small</option>
-          <option value="16" selected>Medium</option>
-          <option value="20">Large</option>
-        </select>
+        <label class="toggle">
+          <input type="checkbox" id="confettiToggle" checked onchange="toggleConfetti()"/>
+          <span class="toggle-slider"></span>
+        </label>
       </div>
     </div>
 
     <div class="settings-section">
-      <h3>🔊 Sound & Effects</h3>
+      <h3>⚙️ Behavior</h3>
       <div class="setting-row">
         <div>
-          <div class="setting-label">Tick Sound</div>
-          <div class="setting-sub">Click sound while spinning</div>
+          <div class="setting-label">Auto-Spin Next</div>
+          <div class="setting-sub">Enable multiple spins</div>
         </div>
-        <label class="toggle"><input type="checkbox" id="tickSound" checked/><span class="toggle-slider"></span></label>
+        <label class="toggle">
+          <input type="checkbox" id="autoSpinToggle" onchange="toggleAutoSpin()"/>
+          <span class="toggle-slider"></span>
+        </label>
       </div>
       <div class="setting-row">
         <div>
-          <div class="setting-label">Win Sound</div>
-          <div class="setting-sub">Sound on result</div>
+          <div class="setting-label">Weight Mode</div>
+          <div class="setting-sub">Control item probabilities</div>
         </div>
-        <label class="toggle"><input type="checkbox" id="winSound" checked/><span class="toggle-slider"></span></label>
-      </div>
-      <div class="setting-row">
-        <div>
-          <div class="setting-label">Confetti Explosion</div>
-          <div class="setting-sub">Celebrate the winner</div>
-        </div>
-        <label class="toggle"><input type="checkbox" id="confettiToggle" checked/><span class="toggle-slider"></span></label>
-      </div>
-      <div class="setting-row">
-        <div>
-          <div class="setting-label">Result Modal</div>
-          <div class="setting-sub">Show winner popup</div>
-        </div>
-        <label class="toggle"><input type="checkbox" id="showModal" checked/><span class="toggle-slider"></span></label>
+        <label class="toggle">
+          <input type="checkbox" id="weightToggle" checked onchange="toggleWeightMode()"/>
+          <span class="toggle-slider"></span>
+        </label>
       </div>
     </div>
 
     <div class="settings-section">
-      <h3>⚙️ Spin Behavior</h3>
-      <div class="setting-row">
-        <div>
-          <div class="setting-label">Allow Equal Chance Override</div>
-          <div class="setting-sub">Ignore weights, spin purely random</div>
-        </div>
-        <label class="toggle"><input type="checkbox" id="equalChance"/><span class="toggle-slider"></span></label>
-      </div>
-      <div class="setting-row">
-        <div>
-          <div class="setting-label">Auto-Spin</div>
-          <div class="setting-sub">Spin again after result</div>
-        </div>
-        <label class="toggle"><input type="checkbox" id="autoSpin"/><span class="toggle-slider"></span></label>
-      </div>
-      <div class="setting-row" id="autoSpinDelayRow" style="display:none">
-        <div>
-          <div class="setting-label">Auto-Spin Delay</div>
-          <div class="setting-sub" id="autoSpinDelayLabel">3 seconds</div>
-        </div>
-        <input type="range" min="1" max="10" value="3" id="autoSpinDelay" style="width:100px"
-          oninput="document.getElementById('autoSpinDelayLabel').textContent=this.value+' seconds'"/>
-      </div>
-    </div>
-
-    <div class="settings-section">
-      <h3>💾 Data</h3>
-      <div class="setting-row">
-        <div>
-          <div class="setting-label">Export All Data</div>
-          <div class="setting-sub">Download JSON backup</div>
-        </div>
-        <button class="btn secondary" onclick="exportAllData()">Export</button>
-      </div>
-      <div class="setting-row">
-        <div>
-          <div class="setting-label">Import Data</div>
-          <div class="setting-sub">Restore from backup</div>
-        </div>
-        <button class="btn secondary" onclick="document.getElementById('importFile').click()">Import</button>
-        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importAllData(this)"/>
-      </div>
-      <div class="setting-row">
-        <div>
-          <div class="setting-label">Reset Everything</div>
-          <div class="setting-sub">Clear all data and settings</div>
-        </div>
-        <button class="btn danger" onclick="resetAll()">Reset</button>
+      <h3>📤 Data</h3>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn secondary" style="width:100%" onclick="exportAllData()">💾 Export All Data</button>
+        <button class="btn secondary" style="width:100%" onclick="importAllData()">📥 Import Data</button>
+        <button class="btn danger" style="width:100%;margin-top:8px" onclick="if(confirm('Are you sure? This cannot be undone.'))resetAll()">🔄 Reset All</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════ WINNER MODAL ══════════════ -->
-<div class="modal-overlay" id="winnerModal">
-  <div class="modal">
-    <span class="modal-winner-emoji" id="modalEmoji">🎉</span>
-    <h2>🏆 WINNER!</h2>
-    <div class="winner-name" id="modalWinnerName">—</div>
-    <div class="modal-actions">
-      <button class="btn" style="flex:1" onclick="closeModal();spinWheel()">🔄 Spin Again</button>
-      <button class="btn secondary" style="flex:1" onclick="closeModal()">Close</button>
-    </div>
-  </div>
-</div>
-
-<!-- TOAST CONTAINER -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-// ═══════════════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════════════
-const PALETTES = {
-  neon:    ['#FF3366','#FF9500','#FFD700','#00E676','#00B0FF','#AA00FF','#FF6BFF','#FF1744','#76FF03','#00E5FF'],
-  candy:   ['#FF80AB','#FFD180','#CCFF90','#80D8FF','#CF94DA','#FF8A65','#F48FB1','#81C784','#4FC3F7','#CE93D8'],
-  ocean:   ['#006994','#0099CC','#00CED1','#20B2AA','#48D1CC','#5F9EA0','#4682B4','#1E90FF','#00BFFF','#87CEEB'],
-  fire:    ['#FF0000','#FF3300','#FF6600','#FF8800','#FFAA00','#FFCC00','#FF4500','#DC143C','#B22222','#FF7F50'],
-  forest:  ['#228B22','#32CD32','#7CFC00','#ADFF2F','#9ACD32','#6B8E23','#556B2F','#8FBC8F','#90EE90','#00FF7F'],
-  sunset:  ['#FF6B35','#F7C59F','#EFEFD0','#004E89','#1A936F','#C3423F','#FF9F1C','#FFBF69','#CBF3F0','#2EC4B6'],
-  mono:    ['#FFFFFF','#E0E0E0','#BDBDBD','#9E9E9E','#757575','#616161','#424242','#303030','#212121','#F5F5F5']
+// ══════════════ CORE STATE ══════════════
+const entries = new Map();
+const history = [];
+let isSpinning = false;
+let wheelCanvas, ctx;
+const palettes = {
+  neon: ['#FF1493', '#00FF7F', '#00FFFF', '#FFD700', '#FF69B4', '#1E90FF'],
+  candy: ['#FF69B4', '#FFB6C1', '#FFC0CB', '#DDA0DD', '#DA70D6', '#EE82EE'],
+  ocean: ['#0047AB', '#1E90FF', '#00BFFF', '#87CEEB', '#20B2AA', '#3CB371'],
+  fire: ['#FF4500', '#FF6347', '#FFD700', '#FFA500', '#DC143C', '#FF1493'],
+  forest: ['#228B22', '#32CD32', '#00FF00', '#7FFF00', '#ADFF2F', '#9ACD32'],
+  sunset: ['#FF6347', '#FFB347', '#FFD700', '#FF8C00', '#FF7F50', '#FF6347'],
+  space: ['#191970', '#4B0082', '#9932CC', '#8A2BE2', '#4169E1', '#00CED1']
 };
 
-const PRESETS = [
-  { name: 'Yes or No', emoji: '🤔', items: ['Yes', 'No', 'Maybe', 'Definitely!', 'Absolutely Not'] },
-  { name: 'Weekdays', emoji: '📅', items: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] },
-  { name: 'Food Picker', emoji: '🍕', items: ['Pizza','Sushi','Tacos','Burgers','Pasta','Thai','Indian','Mexican','Salad','Ramen'] },
-  { name: 'Team Names', emoji: '👥', items: ['Team Alpha','Team Beta','Team Gamma','Team Delta','Team Omega'] },
-  { name: 'Dice 1–6', emoji: '🎲', items: ['1','2','3','4','5','6'] },
-  { name: 'Colors', emoji: '🎨', items: ['Red','Blue','Green','Yellow','Purple','Orange','Pink','Cyan','White','Black'] },
-  { name: 'Truth or Dare', emoji: '🎭', items: ['Truth','Dare','Double Dare','Pass'] },
-  { name: 'Movie Genres', emoji: '🎬', items: ['Action','Comedy','Horror','Romance','Sci-Fi','Thriller','Animation','Documentary'] },
-  { name: 'Exercise', emoji: '💪', items: ['Push-ups x20','Squats x30','Plank 1min','Run 5min','Jumping Jacks','Burpees x10','Sit-ups x25'] },
-  { name: 'Chores', emoji: '🧹', items: ['Dishes','Vacuuming','Laundry','Cooking','Trash','Grocery','Bathroom','Windows'] },
-  { name: 'Numbers 1–10', emoji: '🔢', items: ['1','2','3','4','5','6','7','8','9','10'] },
-  { name: 'Zodiac Signs', emoji: '♈', items: ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'] },
-];
-
-let state = {
-  entries: [],
-  history: [],
-  savedWheels: [],
-  settings: {
-    palette: 'neon',
-    showLabels: true,
-    showWeights: true,
-    fontSize: 16,
-    tickSound: true,
-    winSound: true,
-    confetti: true,
-    showModal: true,
-    equalChance: false,
-    autoSpin: false,
-    autoSpinDelay: 3,
-  }
+let settings = {
+  soundEnabled: true,
+  confettiEnabled: true,
+  autoSpinEnabled: false,
+  weightModeEnabled: true,
+  currentPalette: 'neon'
 };
 
-let spinning = false;
-let currentAngle = 0;
-let spinCount = 0;
-let audioCtx = null;
+// ══════════════ INITIALIZATION ══════════════
+window.addEventListener('DOMContentLoaded', init);
 
-// ═══════════════════════════════════════════════════════
-//  PERSISTENCE
-// ═══════════════════════════════════════════════════════
-function loadState() {
-  try {
-    const saved = localStorage.getItem('spinwheel-state');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      state = { ...state, ...parsed };
-      state.settings = { ...state.settings, ...(parsed.settings||{}) };
-    }
-  } catch(e) {}
-}
-function saveState() {
-  try { localStorage.setItem('spinwheel-state', JSON.stringify(state)); } catch(e) {}
+function init() {
+  wheelCanvas = document.getElementById('wheel');
+  ctx = wheelCanvas.getContext('2d');
+  loadSettings();
+  loadEntries();
+  loadHistory();
+  renderWheel();
+  renderPresets();
+  renderSavedWheels();
+  updateStats();
 }
 
-// ═══════════════════════════════════════════════════════
-//  TABS
-// ═══════════════════════════════════════════════════════
-function showTab(name) {
+// ══════════════ TAB MANAGEMENT ══════════════
+function showTab(tabName) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    if (b.textContent.toLowerCase().includes(name)) b.classList.add('active');
-  });
-  if (name === 'stats') renderStats();
-  if (name === 'presets') renderPresets();
+  document.getElementById('tab-' + tabName).classList.add('active');
+  event.target.classList.add('active');
+  updateStats();
 }
 
-// ═══════════════════════════════════════════════════════
-//  ENTRIES
-// ═══════════════════════════════════════════════════════
-function getColors() { return PALETTES[state.settings.palette] || PALETTES.neon; }
-
+// ══════════════ ENTRY MANAGEMENT ══════════════
 function addEntry() {
-  const input = document.getElementById('newEntry');
-  const weightInput = document.getElementById('newWeight');
-  const text = input.value.trim();
-  if (!text) { toast('⚠️ Enter an item first'); return; }
-  const weight = Math.max(1, Math.min(100, parseInt(weightInput.value)||1));
-  const colors = getColors();
-  state.entries.push({
-    id: Date.now(),
-    text,
-    weight,
-    color: colors[state.entries.length % colors.length]
-  });
-  input.value = '';
-  weightInput.value = 1;
-  input.focus();
-  saveState();
+  const text = document.getElementById('newEntry').value.trim();
+  const weight = parseInt(document.getElementById('newWeight').value) || 1;
+
+  if (!text) { toast('Please enter an item!'); return; }
+  if (entries.has(text)) { toast('Item already exists!'); return; }
+
+  entries.set(text, { weight, color: generateColor() });
+  document.getElementById('newEntry').value = '';
+  saveEntries();
   renderEntries();
-  drawWheel();
+  renderWheel();
+  toast('✅ Item added!');
 }
 
-function removeEntry(id) {
-  state.entries = state.entries.filter(e => e.id !== id);
-  saveState();
+function deleteEntry(text) {
+  entries.delete(text);
+  saveEntries();
   renderEntries();
-  drawWheel();
+  renderWheel();
+  toast('🗑️ Item deleted!');
 }
 
 function clearAll() {
-  if (!state.entries.length) return;
   if (!confirm('Clear all entries?')) return;
-  state.entries = [];
-  saveState();
+  entries.clear();
+  saveEntries();
   renderEntries();
-  drawWheel();
-  document.getElementById('resultBox').classList.remove('show');
+  renderWheel();
+  toast('🗑️ All cleared!');
 }
 
 function shuffleEntries() {
-  for (let i = state.entries.length-1; i > 0; i--) {
-    const j = Math.floor(Math.random()*(i+1));
-    [state.entries[i], state.entries[j]] = [state.entries[j], state.entries[i]];
+  const arr = Array.from(entries.entries());
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  saveState(); renderEntries(); drawWheel();
+  entries.clear();
+  arr.forEach(([text, data]) => entries.set(text, data));
+  saveEntries();
+  renderEntries();
+  renderWheel();
   toast('🔀 Shuffled!');
 }
 
 function sortEntries() {
-  state.entries.sort((a,b) => a.text.localeCompare(b.text));
-  saveState(); renderEntries(); drawWheel();
-  toast('↕️ Sorted A–Z');
+  const sorted = Array.from(entries.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+  entries.clear();
+  sorted.forEach(([text, data]) => entries.set(text, data));
+  saveEntries();
+  renderEntries();
+  renderWheel();
+  toast('↕️ Sorted A-Z!');
 }
 
 function bulkImport() {
   const text = document.getElementById('bulkText').value.trim();
   if (!text) return;
-  const lines = text.split('\n').filter(l=>l.trim());
-  const colors = getColors();
+
+  const lines = text.split('\n').filter(l => l.trim());
+  let count = 0;
+
   lines.forEach(line => {
-    const parts = line.split(',');
-    const t = parts[0].trim();
-    const w = parseInt(parts[1]) || 1;
-    if (t) state.entries.push({
-      id: Date.now() + Math.random(),
-      text: t,
-      weight: Math.max(1, Math.min(100, w)),
-      color: colors[state.entries.length % colors.length]
-    });
+    const parts = line.split(',').map(p => p.trim());
+    const item = parts[0];
+    const weight = parseInt(parts[1]) || 1;
+
+    if (item && !entries.has(item)) {
+      entries.set(item, { weight, color: generateColor() });
+      count++;
+    }
   });
+
   document.getElementById('bulkText').value = '';
-  saveState(); renderEntries(); drawWheel();
-  toast(`✅ Imported ${lines.length} items`);
+  saveEntries();
+  renderEntries();
+  renderWheel();
+  toast(`✅ Imported ${count} items!`);
 }
 
 function exportEntries() {
-  const text = state.entries.map(e => `${e.text},${e.weight}`).join('\n');
-  const blob = new Blob([text], {type:'text/plain'});
+  const text = Array.from(entries.entries())
+    .map(([name, data]) => `${name}, ${data.weight}`)
+    .join('\n');
+
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'spinwheel-entries.txt';
-  a.click();
-}
-
-function quickAdd() {
-  shuffleEntries();
-}
-
-function renderEntries() {
-  const list = document.getElementById('entriesList');
-  const count = document.getElementById('entryCount');
-  count.textContent = state.entries.length;
-  if (!state.entries.length) {
-    list.innerHTML = '<div class="empty-state"><span class="e-icon">🎯</span>No entries yet — add some above!</div>';
-    return;
-  }
-  const showW = document.getElementById('showWeights')?.checked ?? state.settings.showWeights;
-  list.innerHTML = state.entries.map((e,i) => `
-    <div class="entry-item" draggable="true" ondragstart="dragStart(${i})" ondragover="dragOver(event,${i})" ondrop="dragDrop(${i})">
-      <div class="entry-color" style="background:${e.color}"></div>
-      ${showW ? `<span class="entry-weight-badge">${e.weight}x</span>` : ''}
-      <span class="entry-text" title="${e.text}">${e.text}</span>
-      <div class="entry-actions">
-        <button class="icon-btn" onclick="editEntry(${e.id})" title="Edit">✏️</button>
-        <button class="icon-btn del" onclick="removeEntry(${e.id})" title="Remove">✕</button>
-      </div>
-    </div>`).join('');
-}
-
-function editEntry(id) {
-  const entry = state.entries.find(e => e.id === id);
-  if (!entry) return;
-  const newText = prompt('Edit entry:', entry.text);
-  if (newText === null) return;
-  const newWeight = prompt('Edit weight (1-100):', entry.weight);
-  if (newText.trim()) entry.text = newText.trim();
-  if (newWeight !== null) entry.weight = Math.max(1, Math.min(100, parseInt(newWeight)||1));
-  saveState(); renderEntries(); drawWheel();
-}
-
-// Drag and drop reorder
-let dragIdx = null;
-function dragStart(i) { dragIdx = i; }
-function dragOver(e, i) { e.preventDefault(); }
-function dragDrop(i) {
-  if (dragIdx === null || dragIdx === i) return;
-  const moved = state.entries.splice(dragIdx, 1)[0];
-  state.entries.splice(i, 0, moved);
-  dragIdx = null;
-  saveState(); renderEntries(); drawWheel();
-}
-
-// ═══════════════════════════════════════════════════════
-//  WHEEL DRAWING
-// ═══════════════════════════════════════════════════════
-const canvas = document.getElementById('wheel');
-const ctx = canvas.getContext('2d');
-
-function drawWheel() {
-  const w = canvas.width, h = canvas.height;
-  const cx = w/2, cy = h/2, r = w/2 - 10;
-  ctx.clearRect(0,0,w,h);
-
-  const entries = state.entries;
-  if (!entries.length) {
-    // Empty state
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(cx,cy,r,0,Math.PI*2);
-    ctx.fillStyle = '#160028';
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(255,107,255,0.3)';
-    ctx.lineWidth = 4;
-    ctx.stroke();
-    ctx.fillStyle = 'rgba(255,107,255,0.5)';
-    ctx.font = 'bold 20px Orbitron, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('Add entries to', cx, cy-16);
-    ctx.fillText('start spinning!', cx, cy+16);
-    ctx.restore();
-    return;
-  }
-
-  const totalWeight = entries.reduce((s,e) => s + (state.settings.equalChance ? 1 : e.weight), 0);
-  let startAngle = currentAngle - Math.PI/2;
-  const showLabels = document.getElementById('showLabels')?.checked ?? state.settings.showLabels;
-  const fontSize = parseInt(document.getElementById('fontSizeSelect')?.value || state.settings.fontSize || 16);
-
-  entries.forEach((entry, i) => {
-    const w = state.settings.equalChance ? 1 : entry.weight;
-    const slice = (w / totalWeight) * Math.PI * 2;
-    const endAngle = startAngle + slice;
-    const midAngle = startAngle + slice/2;
-
-    // Segment
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, r, startAngle, endAngle);
-    ctx.closePath();
-
-    // Gradient fill
-    const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-    grd.addColorStop(0, lightenColor(entry.color, 30));
-    grd.addColorStop(1, entry.color);
-    ctx.fillStyle = grd;
-    ctx.fill();
-
-    // Border
-    ctx.strokeStyle = 'rgba(0,0,10,0.4)';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
-    // Label
-    if (showLabels) {
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(midAngle);
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-
-      const textR = r * 0.78;
-      const maxW = r * 0.58;
-      const label = entry.text;
-
-      ctx.font = `bold ${fontSize}px 'Exo 2', sans-serif`;
-      ctx.fillStyle = 'rgba(0,0,0,0.45)';
-      ctx.fillText(label, textR + 1.5, 1.5, maxW);
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText(label, textR, 0, maxW);
-      ctx.restore();
-    }
-
-    startAngle = endAngle;
-    ctx.restore();
-  });
-
-  // Outer ring
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(cx,cy,r,0,Math.PI*2);
-  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-  ctx.lineWidth = 3;
-  ctx.stroke();
-
-  // Decorative outer ring
-  ctx.beginPath();
-  ctx.arc(cx,cy,r+5,0,Math.PI*2);
-  ctx.strokeStyle = 'rgba(255,107,255,0.2)';
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  // Center cap
-  const capR = 36;
-  const capGrd = ctx.createRadialGradient(cx,cy,0,cx,cy,capR);
-  capGrd.addColorStop(0, '#3d006b');
-  capGrd.addColorStop(1, '#1a0033');
-  ctx.beginPath();
-  ctx.arc(cx,cy,capR,0,Math.PI*2);
-  ctx.fillStyle = capGrd;
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(255,107,255,0.6)';
-  ctx.lineWidth = 3;
-  ctx.stroke();
-  ctx.restore();
-}
-
-function lightenColor(hex, amount) {
-  const num = parseInt(hex.replace('#',''), 16);
-  const r = Math.min(255, (num>>16) + amount);
-  const g = Math.min(255, ((num>>8)&0xff) + amount);
-  const b = Math.min(255, (num&0xff) + amount);
-  return `rgb(${r},${g},${b})`;
-}
-
-// ═══════════════════════════════════════════════════════
-//  SPIN LOGIC
-// ═══════════════════════════════════════════════════════
-function handleWheelClick() { if (!spinning) spinWheel(); }
-
-function getWinner() {
-  const entries = state.entries;
-  if (!entries.length) return null;
-  const useEqual = document.getElementById('equalChance')?.checked || state.settings.equalChance;
-  const total = entries.reduce((s,e) => s + (useEqual ? 1 : e.weight), 0);
-  let rand = Math.random() * total;
-  for (const e of entries) {
-    rand -= (useEqual ? 1 : e.weight);
-    if (rand <= 0) return e;
-  }
-  return entries[entries.length-1];
-}
-
-function spinWheel() {
-  if (spinning || !state.entries.length) {
-    if (!state.entries.length) toast('⚠️ Add entries first!');
-    return;
-  }
-  spinning = true;
-  spinCount++;
-
-  const spinBtn = document.getElementById('spinBtn');
-  const centerBtn = document.getElementById('centerBtn');
-  spinBtn.disabled = true;
-  canvas.classList.add('spinning');
-
-  const winner = getWinner();
-
-  // Calculate target angle
-  const totalWeight = state.entries.reduce((s,e) => s + (state.settings.equalChance ? 1 : e.weight), 0);
-  let useEqual = document.getElementById('equalChance')?.checked || state.settings.equalChance;
-
-  // Find winner's angle range
-  let cumulative = 0;
-  let winnerStart = 0, winnerEnd = 0;
-  for (const e of state.entries) {
-    const w = useEqual ? 1 : e.weight;
-    const frac = w / totalWeight;
-    const seg = frac * Math.PI * 2;
-    if (e.id === winner.id) {
-      winnerStart = cumulative;
-      winnerEnd = cumulative + seg;
-      break;
-    }
-    cumulative += seg;
-  }
-
-  // Target: winner center lands under pointer (which is at top = -π/2)
-  const winnerMid = winnerStart + (winnerEnd - winnerStart) / 2;
-  const speed = parseInt(document.getElementById('speedSlider')?.value || 5);
-  const duration = parseInt(document.getElementById('durSlider')?.value || 4);
-
-  const minRotations = 3 + speed * 0.8;
-  const totalSpin = Math.PI * 2 * minRotations;
-
-  // We want currentAngle - Math.PI/2 + totalSpin + offset = target
-  const targetOffset = -winnerMid - (currentAngle - Math.PI/2);
-  const finalSpin = totalSpin + ((targetOffset % (Math.PI*2)) + Math.PI*2) % (Math.PI*2);
-
-  const startAngle = currentAngle;
-  const startTime = performance.now();
-  const dur = duration * 1000;
-
-  document.getElementById('resultBox').classList.remove('show');
-
-  let lastAngle = currentAngle;
-  let lastTickTime = 0;
-  const tickInterval = Math.max(20, 200 - speed * 18);
-
-  function animate(now) {
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed / dur, 1);
-    // Ease out quartic
-    const ease = 1 - Math.pow(1 - progress, 4);
-    currentAngle = startAngle + finalSpin * ease;
-
-    // Tick sound
-    const useSound = document.getElementById('tickSound')?.checked ?? state.settings.tickSound;
-    if (useSound && now - lastTickTime > tickInterval * (1 - progress*0.7)) {
-      playTick();
-      lastTickTime = now;
-    }
-
-    drawWheel();
-
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    } else {
-      currentAngle = startAngle + finalSpin;
-      drawWheel();
-      onSpinEnd(winner);
-    }
-  }
-  requestAnimationFrame(animate);
-}
-
-function onSpinEnd(winner) {
-  spinning = false;
-  const spinBtn = document.getElementById('spinBtn');
-  const centerBtn = document.getElementById('centerBtn');
-  spinBtn.disabled = false;
-  canvas.classList.remove('spinning');
-
-  // Record history
-  const historyEntry = {
-    id: Date.now(),
-    text: winner.text,
-    color: winner.color,
-    time: new Date().toLocaleTimeString(),
-    spin: spinCount
-  };
-  state.history.unshift(historyEntry);
-  if (state.history.length > 200) state.history = state.history.slice(0, 200);
-
-  // Remove after spin
-  if (document.getElementById('removeAfterSpin')?.checked) {
-    removeEntry(winner.id);
-  }
-
-  saveState();
-  renderHistory();
-  showResult(winner);
-
-  // Win sound
-  const useWin = document.getElementById('winSound')?.checked ?? state.settings.winSound;
-  if (useWin) playWin();
-
-  // Confetti
-  const useConfetti = document.getElementById('confettiToggle')?.checked ?? state.settings.confetti;
-  if (useConfetti) fireConfetti(winner.color);
-
-  // Modal
-  const useModal = document.getElementById('showModal')?.checked ?? state.settings.showModal;
-  if (useModal) showWinnerModal(winner);
-
-  // Auto-spin
-  const auto = document.getElementById('autoSpin')?.checked;
-  if (auto && state.entries.length > 0) {
-    const delay = parseInt(document.getElementById('autoSpinDelay')?.value || 3);
-    setTimeout(spinWheel, delay * 1000);
-  }
-}
-
-function showResult(winner) {
-  document.getElementById('resultEmoji').textContent = getEmoji(winner.text);
-  document.getElementById('resultValue').textContent = winner.text;
-  document.getElementById('resultBox').classList.add('show');
-}
-
-function showWinnerModal(winner) {
-  document.getElementById('modalEmoji').textContent = getEmoji(winner.text);
-  document.getElementById('modalWinnerName').textContent = winner.text;
-  document.getElementById('modalWinnerName').style.color = winner.color;
-  document.getElementById('winnerModal').classList.add('show');
-}
-
-function closeModal() {
-  document.getElementById('winnerModal').classList.remove('show');
-}
-document.getElementById('winnerModal').addEventListener('click', e => {
-  if (e.target === document.getElementById('winnerModal')) closeModal();
-});
-
-function getEmoji(text) {
-  const t = text.toLowerCase();
-  if (t.includes('yes') || t.includes('true')) return '✅';
-  if (t.includes('no') || t.includes('false')) return '❌';
-  if (t.includes('pizza')) return '🍕';
-  if (t.includes('sushi')) return '🍣';
-  if (t.includes('burger')) return '🍔';
-  if (t.includes('taco')) return '🌮';
-  if (t.includes('pasta')) return '🍝';
-  if (t.includes('ramen')) return '🍜';
-  if (/^\d+$/.test(t)) return ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'][parseInt(t)-1] || '🔢';
-  return ['🎉','🏆','🌟','🎊','🎯','🥇','✨','🎁','🌈','🚀'][Math.floor(Math.random()*10)];
-}
-
-// ═══════════════════════════════════════════════════════
-//  HISTORY
-// ═══════════════════════════════════════════════════════
-function renderHistory() {
-  const list = document.getElementById('historyList');
-  if (!state.history.length) {
-    list.innerHTML = '<div class="empty-state"><span class="e-icon">🎲</span>Spin the wheel to start!</div>';
-    return;
-  }
-  list.innerHTML = state.history.slice(0,20).map((h,i) => `
-    <div class="history-item">
-      <span class="h-num">#${h.spin||i+1}</span>
-      <div class="h-color" style="background:${h.color}"></div>
-      <span class="h-val">${h.text}</span>
-      <span class="h-time">${h.time}</span>
-    </div>`).join('');
-}
-
-function clearHistory() {
-  if (!state.history.length) return;
-  if (!confirm('Clear all history?')) return;
-  state.history = [];
-  spinCount = 0;
-  saveState();
-  renderHistory();
-  renderStats();
-  toast('🗑️ History cleared');
-}
-
-// ═══════════════════════════════════════════════════════
-//  STATS
-// ═══════════════════════════════════════════════════════
-function renderStats() {
-  const grid = document.getElementById('statsGrid');
-  const total = state.history.length;
-  const unique = new Set(state.history.map(h=>h.text)).size;
-  const mostFreq = getMostFrequent();
-
-  grid.innerHTML = `
-    <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Total Spins</div></div>
-    <div class="stat-card"><div class="stat-value">${state.entries.length}</div><div class="stat-label">Entries</div></div>
-    <div class="stat-card"><div class="stat-value">${unique}</div><div class="stat-label">Unique Winners</div></div>
-    <div class="stat-card"><div class="stat-value">${mostFreq.text||'—'}</div><div class="stat-label">Most Won (${mostFreq.count||0}x)</div></div>
-  `;
-
-  // Bar chart
-  const freq = {};
-  const colorMap = {};
-  state.history.forEach(h => {
-    freq[h.text] = (freq[h.text]||0)+1;
-    colorMap[h.text] = h.color;
-  });
-  const sorted = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,12);
-  const maxCount = sorted[0]?.[1] || 1;
-
-  const chart = document.getElementById('barChart');
-  if (!sorted.length) {
-    chart.innerHTML = '<div class="empty-state"><span class="e-icon">📊</span>No spins yet!</div>';
-  } else {
-    chart.innerHTML = sorted.map(([name, count]) => `
-      <div class="bar-row">
-        <div class="bar-name">${name}</div>
-        <div class="bar-track">
-          <div class="bar-fill" style="width:${(count/maxCount*100).toFixed(1)}%;background:${colorMap[name]||'var(--accent)'}"></div>
-        </div>
-        <div class="bar-count">${count}</div>
-      </div>`).join('');
-  }
-
-  // Full history
-  const fullList = document.getElementById('fullHistoryList');
-  fullList.innerHTML = state.history.length
-    ? state.history.map((h,i) => `
-      <div class="history-item">
-        <span class="h-num">#${h.spin||state.history.length-i}</span>
-        <div class="h-color" style="background:${h.color}"></div>
-        <span class="h-val">${h.text}</span>
-        <span class="h-time">${h.time}</span>
-      </div>`).join('')
-    : '<div class="empty-state"><span class="e-icon">📊</span>No history yet</div>';
-}
-
-function getMostFrequent() {
-  const freq = {};
-  state.history.forEach(h => freq[h.text]=(freq[h.text]||0)+1);
-  const sorted = Object.entries(freq).sort((a,b)=>b[1]-a[1]);
-  return sorted.length ? { text: sorted[0][0], count: sorted[0][1] } : {};
-}
-
-// ═══════════════════════════════════════════════════════
-//  PRESETS
-// ═══════════════════════════════════════════════════════
-function renderPresets() {
-  const grid = document.getElementById('presetsGrid');
-  grid.innerHTML = PRESETS.map((p,i) => `
-    <div class="preset-card" onclick="loadPreset(${i})">
-      <span class="preset-emoji">${p.emoji}</span>
-      <div class="preset-name">${p.name}</div>
-      <div class="preset-items">${p.items.join(', ')}</div>
-    </div>`).join('');
-
-  renderSavedWheels();
-}
-
-function loadPreset(i) {
-  const p = PRESETS[i];
-  const colors = getColors();
-  state.entries = p.items.map((text, j) => ({
-    id: Date.now() + j,
-    text,
-    weight: 1,
-    color: colors[j % colors.length]
-  }));
-  saveState();
-  renderEntries();
-  drawWheel();
-  showTab('wheel');
-  toast(`✅ Loaded: ${p.name}`);
-}
-
-function saveCurrentWheel() {
-  const name = document.getElementById('saveName').value.trim();
-  if (!name) { toast('⚠️ Enter a name'); return; }
-  if (!state.entries.length) { toast('⚠️ No entries to save'); return; }
-  state.savedWheels = state.savedWheels.filter(w => w.name !== name);
-  state.savedWheels.push({ name, entries: JSON.parse(JSON.stringify(state.entries)) });
-  document.getElementById('saveName').value = '';
-  saveState();
-  renderSavedWheels();
-  toast(`💾 Saved: ${name}`);
-}
-
-function renderSavedWheels() {
-  const grid = document.getElementById('savedWheelsList');
-  if (!state.savedWheels.length) {
-    grid.innerHTML = '<div class="empty-state"><span class="e-icon">💾</span>No saved wheels yet</div>';
-    return;
-  }
-  grid.innerHTML = state.savedWheels.map((w,i) => `
-    <div class="preset-card" style="position:relative">
-      <button class="icon-btn del" onclick="event.stopPropagation();deleteSaved(${i})" style="position:absolute;top:8px;right:8px">✕</button>
-      <span class="preset-emoji">💾</span>
-      <div class="preset-name">${w.name}</div>
-      <div class="preset-items">${w.entries.map(e=>e.text).join(', ')}</div>
-      <button class="btn" style="width:100%;margin-top:8px;font-size:0.75rem" onclick="loadSaved(${i})">Load</button>
-    </div>`).join('');
-}
-
-function loadSaved(i) {
-  state.entries = JSON.parse(JSON.stringify(state.savedWheels[i].entries));
-  saveState(); renderEntries(); drawWheel();
-  showTab('wheel');
-  toast(`✅ Loaded: ${state.savedWheels[i].name}`);
-}
-
-function deleteSaved(i) {
-  state.savedWheels.splice(i, 1);
-  saveState(); renderSavedWheels();
-  toast('🗑️ Deleted');
-}
-
-// ═══════════════════════════════════════════════════════
-//  SETTINGS
-// ═══════════════════════════════════════════════════════
-function applyPalette(pal) {
-  state.settings.palette = pal;
-  const colors = getColors();
-  state.entries.forEach((e, i) => e.color = colors[i % colors.length]);
-  saveState(); renderEntries(); drawWheel();
-}
-
-function syncSettingsUI() {
-  const s = state.settings;
-  if (document.getElementById('paletteSelect')) document.getElementById('paletteSelect').value = s.palette || 'neon';
-  if (document.getElementById('showLabels')) document.getElementById('showLabels').checked = s.showLabels !== false;
-  if (document.getElementById('showWeights')) document.getElementById('showWeights').checked = s.showWeights !== false;
-  if (document.getElementById('fontSizeSelect')) document.getElementById('fontSizeSelect').value = s.fontSize || 16;
-  if (document.getElementById('tickSound')) document.getElementById('tickSound').checked = s.tickSound !== false;
-  if (document.getElementById('winSound')) document.getElementById('winSound').checked = s.winSound !== false;
-  if (document.getElementById('confettiToggle')) document.getElementById('confettiToggle').checked = s.confetti !== false;
-  if (document.getElementById('showModal')) document.getElementById('showModal').checked = s.showModal !== false;
-  if (document.getElementById('equalChance')) document.getElementById('equalChance').checked = !!s.equalChance;
-  if (document.getElementById('autoSpin')) document.getElementById('autoSpin').checked = !!s.autoSpin;
-  if (document.getElementById('autoSpinDelay')) document.getElementById('autoSpinDelay').value = s.autoSpinDelay || 3;
-}
-
-document.getElementById('autoSpin').addEventListener('change', function() {
-  document.getElementById('autoSpinDelayRow').style.display = this.checked ? 'flex' : 'none';
-});
-
-function exportAllData() {
-  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'spinwheel-backup.json';
+  a.href = url;
+  a.download = 'entries.txt';
   a.click();
   toast('📤 Exported!');
 }
 
-function importAllData(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const data = JSON.parse(e.target.result);
-      state = { ...state, ...data };
-      saveState();
-      renderEntries(); drawWheel(); renderHistory(); syncSettingsUI();
-      toast('📥 Imported!');
-    } catch { toast('❌ Invalid file'); }
-  };
-  reader.readAsText(file);
-}
+// ══════════════ WHEEL RENDERING ══════════════
+function renderWheel() {
+  const size = wheelCanvas.width;
+  const centerX = size / 2;
+  const centerY = size / 2;
+  const radius = size / 2 - 10;
 
-function resetAll() {
-  if (!confirm('Reset EVERYTHING? This cannot be undone.')) return;
-  localStorage.removeItem('spinwheel-state');
-  location.reload();
-}
+  ctx.clearRect(0, 0, size, size);
 
-// ═══════════════════════════════════════════════════════
-//  AUDIO
-// ═══════════════════════════════════════════════════════
-function getAudioCtx() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  return audioCtx;
-}
-
-function playTick() {
-  try {
-    const ctx = getAudioCtx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.type = 'triangle';
-    osc.frequency.value = 800 + Math.random()*200;
-    gain.gain.setValueAtTime(0.06, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+0.05);
-    osc.start(); osc.stop(ctx.currentTime+0.05);
-  } catch(e) {}
-}
-
-function playWin() {
-  try {
-    const ctx = getAudioCtx();
-    const notes = [523, 659, 784, 1047];
-    notes.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.type = 'sine';
-      osc.frequency.value = freq;
-      const t = ctx.currentTime + i*0.12;
-      gain.gain.setValueAtTime(0, t);
-      gain.gain.linearRampToValueAtTime(0.2, t+0.05);
-      gain.gain.exponentialRampToValueAtTime(0.001, t+0.4);
-      osc.start(t); osc.stop(t+0.5);
-    });
-  } catch(e) {}
-}
-
-// ═══════════════════════════════════════════════════════
-//  CONFETTI
-// ═══════════════════════════════════════════════════════
-const confCanvas = document.getElementById('confetti-canvas');
-const confCtx = confCanvas.getContext('2d');
-let confParticles = [];
-let confAnim = null;
-
-function fireConfetti(mainColor) {
-  confCanvas.width = window.innerWidth;
-  confCanvas.height = window.innerHeight;
-  const colors = [mainColor, '#FFD700', '#ff6bff', '#00E676', '#00B0FF', '#ffffff'];
-  confParticles = [];
-  for (let i = 0; i < 140; i++) {
-    confParticles.push({
-      x: Math.random()*confCanvas.width,
-      y: -10,
-      vx: (Math.random()-0.5)*6,
-      vy: Math.random()*4+2,
-      color: colors[Math.floor(Math.random()*colors.length)],
-      size: Math.random()*10+4,
-      rot: Math.random()*360,
-      rotV: (Math.random()-0.5)*8,
-      shape: Math.random() > 0.5 ? 'rect' : 'circle',
-      alpha: 1
-    });
+  if (entries.size === 0) {
+    ctx.fillStyle = '#888';
+    ctx.font = '20px Orbitron';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Add items to start!', centerX, centerY);
+    return;
   }
-  if (confAnim) cancelAnimationFrame(confAnim);
-  animateConfetti();
-}
 
-function animateConfetti() {
-  confCtx.clearRect(0,0,confCanvas.width,confCanvas.height);
-  confParticles.forEach(p => {
-    p.x += p.vx; p.y += p.vy;
-    p.rot += p.rotV;
-    p.vy += 0.08;
-    p.alpha -= 0.008;
-    confCtx.save();
-    confCtx.globalAlpha = Math.max(0, p.alpha);
-    confCtx.translate(p.x, p.y);
-    confCtx.rotate(p.rot*Math.PI/180);
-    confCtx.fillStyle = p.color;
-    if (p.shape === 'rect') {
-      confCtx.fillRect(-p.size/2, -p.size/4, p.size, p.size/2);
-    } else {
-      confCtx.beginPath();
-      confCtx.arc(0,0,p.size/2,0,Math.PI*2);
-      confCtx.fill();
-    }
-    confCtx.restore();
+  const palette = palettes[settings.currentPalette] || palettes.neon;
+  const totalWeight = Array.from(entries.values()).reduce((sum, e) => sum + e.weight, 0);
+  const entriesArray = Array.from(entries.entries());
+
+  let currentAngle = 0;
+  entriesArray.forEach((entry, i) => {
+    const [name, data] = entry;
+    const sliceAngle = (data.weight / totalWeight) * 2 * Math.PI;
+
+    // Draw slice
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+    ctx.lineTo(centerX, centerY);
+    ctx.fillStyle = palette[i % palette.length];
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Draw text
+    const textAngle = currentAngle + sliceAngle / 2;
+    const textX = centerX + Math.cos(textAngle) * (radius * 0.7);
+    const textY = centerY + Math.sin(textAngle) * (radius * 0.7);
+
+    ctx.save();
+    ctx.translate(textX, textY);
+    ctx.rotate(textAngle + Math.PI / 2);
+    ctx.fillStyle = '#000';
+    ctx.font = 'bold 12px Exo2';
+    ctx.textAlign = 'center';
+    ctx.fillText(name.substring(0, 12), 0, 0);
+    ctx.restore();
+
+    currentAngle += sliceAngle;
   });
-  confParticles = confParticles.filter(p => p.alpha > 0 && p.y < confCanvas.height+20);
-  if (confParticles.length) confAnim = requestAnimationFrame(animateConfetti);
-  else confCtx.clearRect(0,0,confCanvas.width,confCanvas.height);
 }
 
-// ═══════════════════════════════════════════════════════
-//  TOAST
-// ═══════════════════════════════════════════════════════
-function toast(msg) {
-  const c = document.getElementById('toastContainer');
-  const t = document.createElement('div');
-  t.className = 'toast';
-  t.textContent = msg;
-  c.appendChild(t);
-  setTimeout(() => t.remove(), 3200);
+// ══════════════ SPINNING ══════════════
+function spinWheel() {
+  if (isSpinning || entries.size === 0) return;
+
+  isSpinning = true;
+  document.getElementById('spinBtn').disabled = true;
+
+  const speed = parseInt(document.getElementById('speedSlider').value);
+  const duration = parseInt(document.getElementById('durSlider').value);
+
+  const spins = speed * 5;
+  const rotation = spins * 360 + Math.random() * 360;
+  const totalDuration = duration * 1000;
+
+  const startTime = Date.now();
+  const wheel = document.getElementById('wheel');
+
+  function animate() {
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min(elapsed / totalDuration, 1);
+
+    wheel.style.transform = `rotate(${rotation * progress}deg)`;
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      completeSpun(rotation);
+    }
+  }
+
+  animate();
 }
 
-// ═══════════════════════════════════════════════════════
-//  PWA
-// ═══════════════════════════════════════════════════════
-let deferredInstall = null;
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredInstall = e;
-  document.getElementById('install-btn').style.display = 'block';
-});
+function completeSpun(rotation) {
+  isSpinning = false;
+  document.getElementById('spinBtn').disabled = false;
 
-function openInstallPrompt() {
-  if (deferredInstall) {
-    deferredInstall.prompt();
-    deferredInstall.userChoice.then(r => {
-      if (r.outcome === 'accepted') {
-        document.getElementById('install-btn').style.display = 'none';
-        toast('🎉 App installed!');
-      }
-    });
+  const normalizedRotation = ((rotation % 360) + 360) % 360;
+  const entriesArray = Array.from(entries.entries());
+  const totalWeight = Array.from(entries.values()).reduce((sum, e) => sum + e.weight, 0);
+
+  let accumAngle = 0;
+  for (const [name, data] of entriesArray) {
+    const sliceAngle = (data.weight / totalWeight) * 360;
+    if (normalizedRotation < accumAngle + sliceAngle) {
+      showResult(name, data);
+      return;
+    }
+    accumAngle += sliceAngle;
   }
 }
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js').then(() => {
-    console.log('[SW] Registered');
-  }).catch(e => console.log('[SW] Error', e));
+function showResult(name, data) {
+  const resultBox = document.getElementById('resultBox');
+  const resultValue = document.getElementById('resultValue');
+
+  resultValue.textContent = name;
+  resultBox.classList.add('show');
+
+  history.unshift({ name, color: data.color, time: new Date().toLocaleTimeString() });
+  if (history.length > 50) history.pop();
+
+  saveHistory();
+  renderHistory();
+  updateStats();
+
+  if (settings.confettiEnabled) playConfetti();
+  if (settings.soundEnabled) playSound();
+
+  if (document.getElementById('removeAfterSpin').checked) {
+    setTimeout(() => {
+      entries.delete(name);
+      saveEntries();
+      renderEntries();
+      renderWheel();
+      resultBox.classList.remove('show');
+      toast(`🎯 ${name} removed!`);
+    }, 2000);
+  }
 }
 
-// ═══════════════════════════════════════════════════════
-//  KEYBOARD
-// ═══════════════════════════════════════════════════════
-document.addEventListener('keydown', e => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-  if (e.code === 'Space' || e.code === 'Enter') { e.preventDefault(); spinWheel(); }
-  if (e.code === 'KeyR') shuffleEntries();
-});
+function handleWheelClick() {
+  if (!isSpinning) spinWheel();
+}
 
-// ═══════════════════════════════════════════════════════
-//  RESIZE
-// ═══════════════════════════════════════════════════════
-window.addEventListener('resize', () => { drawWheel(); });
+// ══════════════ HISTORY ══════════════
+function renderHistory() {
+  const historyList = document.getElementById('historyList');
+  const fullHistoryList = document.getElementById('fullHistoryList');
 
-// ═══════════════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════════════
-function init() {
-  loadState();
-  syncSettingsUI();
+  if (history.length === 0) {
+    historyList.innerHTML = '<div class="empty-state"><span class="e-icon">🎲</span>Spin the wheel to start!</div>';
+    fullHistoryList.innerHTML = '<div class="empty-state"><span class="e-icon">🎲</span>No spins yet</div>';
+    return;
+  }
+
+  const html = history.slice(0, 10).map((item, i) => `
+    <div class="history-item">
+      <span class="h-num">#${i + 1}</span>
+      <span class="h-color" style="background:${item.color}"></span>
+      <span class="h-val">${item.name}</span>
+      <span class="h-time">${item.time}</span>
+    </div>
+  `).join('');
+
+  historyList.innerHTML = html || '<div class="empty-state">No history</div>';
+  fullHistoryList.innerHTML = history.map((item, i) => `
+    <div class="history-item">
+      <span class="h-num">#${i + 1}</span>
+      <span class="h-color" style="background:${item.color}"></span>
+      <span class="h-val">${item.name}</span>
+      <span class="h-time">${item.time}</span>
+    </div>
+  `).join('');
+}
+
+function clearHistory() {
+  if (!confirm('Clear all history?')) return;
+  history.length = 0;
+  saveHistory();
+  renderHistory();
+  updateStats();
+  toast('🗑️ History cleared!');
+}
+
+// ══════════════ STATS ══════════════
+function updateStats() {
+  const statsGrid = document.getElementById('statsGrid');
+  const barChart = document.getElementById('barChart');
+
+  const totalSpins = history.length;
+  const uniqueWinners = new Set(history.map(h => h.name)).size;
+  const mostWon = history.length > 0
+    ? history.reduce((acc, h) => {
+        acc[h.name] = (acc[h.name] || 0) + 1;
+        return acc;
+      }, {})
+    : {};
+
+  const topWinner = Object.entries(mostWon).sort((a, b) => b[1] - a[1])[0];
+
+  statsGrid.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-value">${totalSpins}</div>
+      <div class="stat-label">Total Spins</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${uniqueWinners}</div>
+      <div class="stat-label">Winners</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${topWinner ? topWinner[1] : 0}</div>
+      <div class="stat-label">Top Wins</div>
+    </div>
+  `;
+
+  const sorted = Object.entries(mostWon).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const maxWins = sorted[0]?.[1] || 1;
+
+  barChart.innerHTML = sorted.map(([name, count]) => `
+    <div class="bar-row">
+      <div class="bar-name">${name}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${(count/maxWins)*100}%;background:${entries.get(name)?.color || '#ff6bff'}"></div>
+      </div>
+      <div class="bar-count">${count}</div>
+    </div>
+  `).join('') || '<div style="text-align:center;color:var(--text2);padding:20px">No data yet</div>';
+}
+
+// ══════════════ PRESETS ══════════════
+function renderPresets() {
+  const presets = [
+    { emoji: '🎓', name: 'Classroom Picker', items: ['Alice', 'Bob', 'Charlie', 'Diana', 'Eve'] },
+    { emoji: '🎰', name: 'Quick Lotto', items: ['1', '2', '3', '4', '5', '6'] },
+    { emoji: '📝', name: 'Task Selector', items: ['Task A', 'Task B', 'Task C'] }
+  ];
+
+  const html = presets.map(p => `
+    <div class="preset-card" onclick="loadPreset('${p.name}', ${JSON.stringify(p.items).replace(/"/g, '&quot;')})">
+      <div class="preset-emoji">${p.emoji}</div>
+      <div class="preset-name">${p.name}</div>
+      <div class="preset-items">${p.items.join(', ')}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('presetsGrid').innerHTML = html;
+}
+
+function loadPreset(name, items) {
+  entries.clear();
+  items.forEach(item => entries.set(item, { weight: 1, color: generateColor() }));
+  saveEntries();
   renderEntries();
-  drawWheel();
+  renderWheel();
+  toast(`✅ Loaded: ${name}`);
+}
+
+function renderSavedWheels() {
+  const saved = JSON.parse(localStorage.getItem('savedWheels')) || [];
+  const html = saved.map((w, i) => `
+    <div class="preset-card" onclick="loadSavedWheel(${i})">
+      <div class="preset-emoji">💾</div>
+      <div class="preset-name">${w.name}</div>
+      <div class="preset-items">${w.items.length} items</div>
+    </div>
+  `).join('');
+
+  document.getElementById('savedWheelsList').innerHTML = html || '<div class="empty-state">No saved wheels</div>';
+}
+
+function saveCurrentWheel() {
+  const name = document.getElementById('saveName').value.trim();
+  if (!name) { toast('Enter a name!'); return; }
+
+  const saved = JSON.parse(localStorage.getItem('savedWheels')) || [];
+  saved.push({
+    name,
+    items: Array.from(entries.entries()).map(([text, data]) => ({ text, ...data }))
+  });
+
+  localStorage.setItem('savedWheels', JSON.stringify(saved));
+  document.getElementById('saveName').value = '';
+  renderSavedWheels();
+  toast('💾 Saved!');
+}
+
+function loadSavedWheel(index) {
+  const saved = JSON.parse(localStorage.getItem('savedWheels')) || [];
+  const wheel = saved[index];
+
+  entries.clear();
+  wheel.items.forEach(item => entries.set(item.text, { weight: item.weight, color: item.color }));
+  saveEntries();
+  renderEntries();
+  renderWheel();
+  toast(`✅ Loaded: ${wheel.name}`);
+}
+
+// ══════════════ RENDERING ══════════════
+function renderEntries() {
+  const list = document.getElementById('entriesList');
+  const count = document.getElementById('entryCount');
+
+  count.textContent = entries.size;
+
+  if (entries.size === 0) {
+    list.innerHTML = '<div class="empty-state"><span class="e-icon">📭</span>Add items to get started!</div>';
+    return;
+  }
+
+  const html = Array.from(entries.entries()).map(([text, data]) => `
+    <div class="entry-item">
+      <div class="entry-color" style="background:${data.color}"></div>
+      <div class="entry-text">${text}</div>
+      <div class="entry-weight-badge">${data.weight}x</div>
+      <div class="entry-actions">
+        <button class="icon-btn del" onclick="deleteEntry('${text.replace(/'/g, "\\'")}')" title="Delete">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+
+  list.innerHTML = html;
+}
+
+// ══════════════ SETTINGS ══════════════
+function applyPalette(palette) {
+  settings.currentPalette = palette;
+  saveSettings();
+  renderWheel();
+  toast(`🎨 Palette changed!`);
+}
+
+function toggleSound() {
+  settings.soundEnabled = document.getElementById('soundToggle').checked;
+  saveSettings();
+}
+
+function toggleConfetti() {
+  settings.confettiEnabled = document.getElementById('confettiToggle').checked;
+  saveSettings();
+}
+
+function toggleAutoSpin() {
+  settings.autoSpinEnabled = document.getElementById('autoSpinToggle').checked;
+  saveSettings();
+}
+
+function toggleWeightMode() {
+  settings.weightModeEnabled = document.getElementById('weightToggle').checked;
+  saveSettings();
+}
+
+function quickAdd() {
+  const items = ['Quick 1', 'Quick 2', 'Quick 3'];
+  entries.clear();
+  items.forEach(item => entries.set(item, { weight: 1, color: generateColor() }));
+  saveEntries();
+  renderEntries();
+  renderWheel();
+  spinWheel();
+}
+
+// ══════════════ EFFECTS ══════════════
+function playConfetti() {
+  // Simple confetti effect
+  const canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
+  const c = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  for (let i = 0; i < 50; i++) {
+    const x = Math.random() * canvas.width;
+    const y = -10;
+    const color = ['#ff6bff', '#FFD700', '#00FF7F'][Math.floor(Math.random() * 3)];
+    const size = Math.random() * 5 + 2;
+
+    c.fillStyle = color;
+    c.fillRect(x, y, size, size);
+  }
+
+  setTimeout(() => { canvas.clearRect(0, 0, canvas.width, canvas.height); }, 2000);
+}
+
+function playSound() {
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+  osc.connect(gain);
+  gain.connect(audioContext.destination);
+  osc.frequency.value = 800;
+  osc.type = 'sine';
+  gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+  osc.start(audioContext.currentTime);
+  osc.stop(audioContext.currentTime + 0.1);
+}
+
+// ══════════════ STORAGE ══════════════
+function saveEntries() {
+  const data = Array.from(entries.entries()).map(([text, data]) => ({ text, ...data }));
+  localStorage.setItem('entries', JSON.stringify(data));
+}
+
+function loadEntries() {
+  const data = JSON.parse(localStorage.getItem('entries')) || [];
+  data.forEach(item => {
+    entries.set(item.text, { weight: item.weight, color: item.color });
+  });
+  renderEntries();
+}
+
+function saveHistory() {
+  localStorage.setItem('history', JSON.stringify(history));
+}
+
+function loadHistory() {
+  const data = JSON.parse(localStorage.getItem('history')) || [];
+  history.push(...data);
   renderHistory();
 }
 
-init();
+function saveSettings() {
+  localStorage.setItem('settings', JSON.stringify(settings));
+  document.getElementById('paletteSelect').value = settings.currentPalette;
+  document.getElementById('soundToggle').checked = settings.soundEnabled;
+  document.getElementById('confettiToggle').checked = settings.confettiEnabled;
+  document.getElementById('autoSpinToggle').checked = settings.autoSpinEnabled;
+  document.getElementById('weightToggle').checked = settings.weightModeEnabled;
+}
+
+function loadSettings() {
+  const saved = JSON.parse(localStorage.getItem('settings')) || {};
+  Object.assign(settings, saved);
+  saveSettings();
+}
+
+function exportAllData() {
+  const data = {
+    entries: Array.from(entries.entries()),
+    history,
+    settings
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'rafgerwheel-backup.json';
+  a.click();
+  toast('💾 Exported!');
+}
+
+function importAllData() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = event => {
+      try {
+        const data = JSON.parse(event.target.result);
+        entries.clear();
+        data.entries.forEach(([text, item]) => {
+          entries.set(text, item);
+        });
+        history.length = 0;
+        history.push(...data.history);
+        Object.assign(settings, data.settings);
+        saveEntries();
+        saveHistory();
+        saveSettings();
+        renderEntries();
+        renderHistory();
+        renderWheel();
+        updateStats();
+        toast('✅ Imported!');
+      } catch (err) {
+        toast('❌ Invalid file!');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+function resetAll() {
+  localStorage.clear();
+  entries.clear();
+  history.length = 0;
+  settings = { soundEnabled: true, confettiEnabled: true, autoSpinEnabled: false, weightModeEnabled: true, currentPalette: 'neon' };
+  renderEntries();
+  renderHistory();
+  renderWheel();
+  updateStats();
+  saveSettings();
+  toast('🔄 Reset complete!');
+}
+
+// ══════════════ UTILITIES ══════════════
+function generateColor() {
+  const palette = palettes[settings.currentPalette] || palettes.neon;
+  return palette[Math.floor(Math.random() * palette.length)];
+}
+
+function toast(message) {
+  const container = document.getElementById('toastContainer');
+  const toastEl = document.createElement('div');
+  toastEl.className = 'toast';
+  toastEl.textContent = message;
+  container.appendChild(toastEl);
+  setTimeout(() => toastEl.remove(), 3000);
+}
+
+function openInstallPrompt() {
+  window.deferredPrompt?.prompt();
+}
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  window.deferredPrompt = e;
+  document.getElementById('install-btn').style.display = 'block';
+});
 </script>
 </body>
 </html>
