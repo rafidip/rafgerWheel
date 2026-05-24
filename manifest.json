@@ -1,0 +1,15 @@
+{
+  "name": "SpinWheel Pro",
+  "short_name": "SpinWheel",
+  "description": "The ultimate spin wheel decision maker",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d0019",
+  "theme_color": "#ff6bff",
+  "orientation": "any",
+  "icons": [
+    { "src": "logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "categories": ["entertainment", "utilities"],
+  "screenshots": []
+}

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a0533"/>
+      <stop offset="100%" stop-color="#0d0019"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff6bff" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ff6bff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="256" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="240" fill="url(#glow)"/>
+
+  <!-- Wheel segments (8 segments) -->
+  <!-- Segment colors: alternating vibrant palette -->
+  <path d="M256,256 L256,56 A200,200 0 0,1 397,135 Z" fill="#FF3366"/>
+  <path d="M256,256 L397,135 A200,200 0 0,1 456,256 Z" fill="#FF9500"/>
+  <path d="M256,256 L456,256 A200,200 0 0,1 397,377 Z" fill="#FFD700"/>
+  <path d="M256,256 L397,377 A200,200 0 0,1 256,456 Z" fill="#00E676"/>
+  <path d="M256,256 L256,456 A200,200 0 0,1 115,377 Z" fill="#00B0FF"/>
+  <path d="M256,256 L115,377 A200,200 0 0,1 56,256 Z" fill="#AA00FF"/>
+  <path d="M256,256 L56,256 A200,200 0 0,1 115,135 Z" fill="#FF6BFF"/>
+  <path d="M256,256 L115,135 A200,200 0 0,1 256,56 Z" fill="#FF1744"/>
+
+  <!-- Divider lines -->
+  <g stroke="rgba(255,255,255,0.25)" stroke-width="2">
+    <line x1="256" y1="56" x2="256" y2="256"/>
+    <line x1="397" y1="135" x2="256" y2="256"/>
+    <line x1="456" y1="256" x2="256" y2="256"/>
+    <line x1="397" y1="377" x2="256" y2="256"/>
+    <line x1="256" y1="456" x2="256" y2="256"/>
+    <line x1="115" y1="377" x2="256" y2="256"/>
+    <line x1="56" y1="256" x2="256" y2="256"/>
+    <line x1="115" y1="135" x2="256" y2="256"/>
+  </g>
+
+  <!-- Outer ring -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="4"/>
+
+  <!-- Center hub -->
+  <circle cx="256" cy="256" r="45" fill="#1a0533" stroke="#ff6bff" stroke-width="4"/>
+  <circle cx="256" cy="256" r="35" fill="#ff6bff" opacity="0.8"/>
+  <!-- Star/spin icon in center -->
+  <text x="256" y="268" text-anchor="middle" font-size="32" fill="white">✦</text>
+
+  <!-- Pointer arrow at top -->
+  <polygon points="256,36 243,16 269,16" fill="#FFD700" stroke="#fff" stroke-width="2"/>
+
+  <!-- Outer decorative dots -->
+  <circle cx="256" cy="28" r="5" fill="#FFD700"/>
+  <circle cx="376" cy="76" r="4" fill="#FF6BFF"/>
+  <circle cx="448" cy="190" r="4" fill="#00E676"/>
+  <circle cx="448" cy="322" r="4" fill="#00B0FF"/>
+  <circle cx="376" cy="436" r="4" fill="#FF9500"/>
+  <circle cx="136" cy="436" r="4" fill="#FFD700"/>
+  <circle cx="64" cy="322" r="4" fill="#AA00FF"/>
+  <circle cx="64" cy="190" r="4" fill="#FF3366"/>
+  <circle cx="136" cy="76" r="4" fill="#FF1744"/>
+</svg>
